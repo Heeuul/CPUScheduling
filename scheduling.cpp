@@ -4,42 +4,38 @@
 #include <string>
 using namespace std;
 
-const bool debug = false;
+const bool debug = true;
 
-class Prog
+struct Input
 {
-private:
-	int _id;
-
-public:
-	string GetName() { return "P" + to_string(_id); }
-	int &id;
-	int arrivalTime, priority;
-
-	Prog() : id(_id) { _id = -1; }
-	Prog(int ID, int arrivalTime, int priority) : id(_id)
-	{
-		_id = ID;
-		this->arrivalTime = arrivalTime;
-		this->priority = priority;
-	}
+	string name[10];
+	int burst[10], arrival[10], priority[10];
 };
+
+void initialise(int &no);
+int getInt();
+void assignDetails(string &name, int &burst, int &arrival, int &priority);
+void displayMenu(int no, Input input);
+bool performScheduling(int no, Input input, int choice);
+void fcfs(string *name, int *burst, int *arrival, int *priority, int no);
+void rr(string *name, int *burst, int *arrival, int *priority, int no);
+void tlq(string *name, int *burst, int *arrival, int *priority, int no);
+void srtn(string *name, int *burst, int *arrival, int *priority, int no);
 
 int main()
 {
 	bool running = false;
-	int no, burst[10], arrival[10], priority[10];
-	string name[10];
+	Input input;
+	int processNo;
 
-	initialise(no);
-
-	for (int i = 0; i < no; i++)
-		assignDetails(name[i] = "P" + to_string(i), burst[i], arrival[i], priority[i]);
+	initialise(processNo);
+	for (int i = 0; i < processNo; i++)
+		assignDetails(input.name[i] = "P" + to_string(i), input.burst[i], input.arrival[i], input.priority[i]);
 
 	while (!running)
 	{
-		displayMenu(no, name, burst, arrival, priority);
-		running = performScheduling(name, burst, arrival, priority, no);
+		displayMenu(processNo, input);
+		running = performScheduling(processNo, input, getInt());
 	}
 
 	return 0;
@@ -80,13 +76,12 @@ void assignDetails(string &name, int &burst, int &arrival, int &priority)
 
 	cout << endl;
 }
-
-void displayMenu(int no, string *name, int *burst, int *arrival, int *priority)
+void displayMenu(int no, Input input)
 {
 	cout << endl
 		 << setw(15) << "Process" << setw(15) << "Burst time" << setw(15) << "Arrival time" << setw(15) << "Priority" << endl;
 	for (int i = 0; i < no; i++)
-		cout << setw(15) << name[i] << setw(15) << burst[i] << setw(15) << arrival[i] << setw(15) << priority[i] << endl;
+		cout << setw(15) << input.name[i] << setw(15) << input.burst[i] << setw(15) << input.arrival[i] << setw(15) << input.priority[i] << endl;
 
 	cout << "\nWhich algorithm would you like to simulate?\n\n"
 		 << "1. FCFS(First Come First Served)-based pre-emptive Priority.\n"
@@ -97,24 +92,24 @@ void displayMenu(int no, string *name, int *burst, int *arrival, int *priority)
 		 << "Choice-> ";
 }
 
-bool performScheduling(string *name, int *burst, int *arrival, int *priority, int no)
+bool performScheduling(int no, Input input, int choice)
 {
 	cout << endl
 		 << endl;
 
-	switch (getInt())
+	switch (choice)
 	{
 	case 1:
-		fcfs(name, burst, arrival, priority, no);
+		fcfs(input.name, input.burst, input.arrival, input.priority, no);
 		break;
 	case 2:
-		rr(name, burst, arrival, priority, no);
+		rr(input.name, input.burst, input.arrival, input.priority, no);
 		break;
 	case 3:
-		tlq(name, burst, arrival, priority, no);
+		tlq(input.name, input.burst, input.arrival, input.priority, no);
 		break;
 	case 4:
-		srtn(name, burst, arrival, priority, no);
+		srtn(input.name, input.burst, input.arrival, input.priority, no);
 		break;
 	case 0:
 		return true;
@@ -127,7 +122,6 @@ bool performScheduling(string *name, int *burst, int *arrival, int *priority, in
 
 	return false;
 }
-
 void fcfs(string *name, int *burst, int *arrival, int *priority, int no)
 {
 	if (debug)
@@ -283,7 +277,6 @@ void fcfs(string *name, int *burst, int *arrival, int *priority, int no)
 	}
 	cout << output << endl;
 }
-
 void rr(string *name, int *burst, int *arrival, int *priority, int no)
 {
 	if (debug)
@@ -451,7 +444,6 @@ void rr(string *name, int *burst, int *arrival, int *priority, int no)
 	}
 	cout << output << endl;
 }
-
 void tlq(string *name, int *burst, int *arrival, int *priority, int no)
 {
 	if (debug)
@@ -819,7 +811,6 @@ void tlq(string *name, int *burst, int *arrival, int *priority, int no)
 	cout << output2 << endl;
 	cout << output3 << endl;
 }
-
 void srtn(string *name, int *burst, int *arrival, int *priority, int no)
 {
 	if (debug)
