@@ -32,14 +32,12 @@ A simulation of multiple CPU scheduling algorithms made in C++.
 - The scheduling is partitioned into three queues.
 - Processes are assigned on respective queues based on their priority level.
 - The queues are then implemented as fixed-priority pre-emptive scheduling, where processes in higher numbered queues are preempted if a new process enters a lower numbered queue, and only ran again if the lowered number queues are empty.
-
-Queue Behaviours:
-
-| Queue | Priority | Scheduling Algorithm   |
-| ----- | -------- | ---------------------- |
-| 1     | 1 & 2    | Round robin            |
-| 2     | 3 & 4    | First come first serve |
-| 3     | 5 & 6    | First come first serve |
+- Queue Behaviours: 
+  | Queue | Priority | Scheduling Algorithm   |
+  | ----- | -------- | ---------------------- |
+  | 1     | 1 & 2    | Round robin            |
+  | 2     | 3 & 4    | First come first serve |
+  | 3     | 5 & 6    | First come first serve |
 
 ### 4. Shortest Remaining Time Next (SRTN) Scheduling with Priority
 
