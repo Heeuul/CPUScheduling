@@ -2,9 +2,10 @@
 #include <iomanip>
 #include <sstream>
 #include <string>
+#include <vector>
 using namespace std;
 
-const bool debug = true;
+const bool debug = false;
 
 struct Input
 {
@@ -16,6 +17,7 @@ void initialise(int &no);
 int getInt();
 void assignDetails(string &name, int &burst, int &arrival, int &priority);
 void displayMenu(int no, Input input);
+string formattedOutput(string output);
 bool performScheduling(int no, Input input, int choice);
 void fcfs(string *name, int *burst, int *arrival, int *priority, int no);
 void rr(string *name, int *burst, int *arrival, int *priority, int no);
@@ -90,6 +92,28 @@ void displayMenu(int no, Input input)
 		 << "4. Shortest Remaining Time Next (SRTN) Scheduling with Priority.\n\n"
 		 << "0. Exit the program.\n\n\n"
 		 << "Choice-> ";
+}
+string formattedOutput(string output)
+{
+	// sample: 0[P0]5[P2]11[P3]17[P0]18[P1]22[P4]28[P5]34
+
+	stringstream processes, timestamps;
+	for (int i = 0; i < output.length();)
+	{
+		if (output[i] == '[')
+		{
+			processes << "[ " << output.substr(i + 1, 2) << " ]";
+			i += 4;
+		}
+		else
+		{
+			cout << "adding output: " << output[i];
+			timestamps << right << setw(4) << output[i];
+			i++;
+		}
+	}
+
+	return "RESULT:\n" + processes.str() + "\n" + timestamps.str();
 }
 
 bool performScheduling(int no, Input input, int choice)
@@ -275,7 +299,8 @@ void fcfs(string *name, int *burst, int *arrival, int *priority, int no)
 	{
 		cout << "FCFS simulation finished";
 	}
-	cout << output << endl;
+
+	cout << formattedOutput(output) << endl;
 }
 void rr(string *name, int *burst, int *arrival, int *priority, int no)
 {

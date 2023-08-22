@@ -4,8 +4,14 @@
     "xlocale": "cpp",
     "xstring": "cpp",
     "iomanip": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "ostream": "cpp",
+    "sstream": "cpp"
   },
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "C_Cpp.default.compilerPath": "C:\\msys64\\mingw64\\bin\\g++.exe",
+  "[cpp]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  }
 }
